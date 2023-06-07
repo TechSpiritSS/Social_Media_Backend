@@ -1,9 +1,21 @@
 const User = require('../model/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const {
+  registerSchema,
+  loginSchema,
+  updateProfileSchema,
+  updateOpenStatusSchema,
+} = require('../schema/userSchema');
 
 module.exports.register = async (req, res, next) => {
   try {
+    const { error } = registerSchema.validate(req.body);
+    if (error) {
+      res.status(400);
+      return res.json({ msg: error.details[0].message, status: false });
+    }
+
     const { username, email, password } = req.body;
     const userExists = await User.findOne({ username });
     if (userExists) {
@@ -50,6 +62,12 @@ module.exports.register = async (req, res, next) => {
 
 module.exports.login = async (req, res, next) => {
   try {
+    const { error } = loginSchema.validate(req.body);
+    if (error) {
+      res.status(400);
+      return res.json({ msg: error.details[0].message, status: false });
+    }
+
     const { username, password } = req.body;
     const user = await User.findOne({ username });
     if (!user) {
@@ -86,6 +104,12 @@ module.exports.login = async (req, res, next) => {
 
 module.exports.updateProfile = async (req, res, next) => {
   try {
+    const { error } = updateProfileSchema.validate(req.body);
+    if (error) {
+      res.status(400);
+      return res.json({ msg: error.details[0].message, status: false });
+    }
+
     const { id: userId } = req.params;
     const { username, email, password, revealMode } = req.body;
 
@@ -168,6 +192,12 @@ module.exports.getAllUsers = async (req, res, next) => {
 // Update Open Status (Admin Access)
 module.exports.updateOpenStatus = async (req, res, next) => {
   try {
+    const { error } = updateOpenStatusSchema.validate(req.body);
+    if (error) {
+      res.status(400);
+      return res.json({ msg: error.details[0].message, status: false });
+    }
+
     const userId = req.params.id;
     const { openMode } = req.body;
 
