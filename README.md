@@ -270,3 +270,13 @@ Response:
   "status": false
 }
 ```
+## Additional Note
+In the current implementation, the "reveal" and "open" modes are represented as boolean values. However, there is a future scope for enhancement by transforming them into a more dynamic and versatile structure, similar to the concept of "follow" and "following" relationships.
+
+Instead of simply using boolean values, the "reveal" mode can be extended to include a list of user IDs to which the profile information is revealed. This would allow users to selectively choose the individuals with whom they are willing to share their profile details.
+
+Similarly, the "open" mode can be expanded to maintain a list of user IDs that the current user has permission to access. By doing so, the server can validate whether a user has the necessary consent to view another user's profile based on the presence of their ID in the "open" list.
+
+This enhanced approach provides greater flexibility and control over the visibility of profile information. Users can manage their privacy settings by specifying specific individuals they wish to reveal their profile to, and administrators can easily manage the access permissions for various users.
+
+By incorporating these enhancements, the server can offer a more sophisticated and personalized user experience, ensuring that profile information is shared only with authorized individuals while maintaining the desired level of privacy and control.
