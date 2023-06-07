@@ -109,9 +109,16 @@ module.exports.updateProfile = async (req, res, next) => {
       user.revealMode = revealMode;
     }
 
-    const updatedUser = await user.save();
+    let updatedUser = await user.save();
+    updatedUser = {
+      _id: updatedUser._id,
+      username: updatedUser.username,
+      email: updatedUser.email,
+      revealMode: updatedUser.revealMode,
+      openMode: updatedUser.openMode,
+    };
 
-    return res.json({ status: true, user: updatedUser });
+    return res.json({ status: true, updatedUser });
   } catch (ex) {
     next(ex);
   }
@@ -134,6 +141,13 @@ module.exports.getAllUsers = async (req, res, next) => {
         _id: { $ne: userId },
         revealStatus: { $ne: false },
       }).select(['username', 'email', '_id']);
+
+      const revealStatusTrueUsers = await User.find({
+        _id: { $ne: userId },
+        revealStatus: { $ne: true },
+      }).select(['username', 'email', '_id']);
+
+      users = users.concat(revealStatusTrueUsers);
     } else {
       users = await User.find({ _id: { $ne: userId } }).select([
         'username',
@@ -154,7 +168,7 @@ module.exports.getAllUsers = async (req, res, next) => {
 // Update Open Status (Admin Access)
 module.exports.updateOpenStatus = async (req, res, next) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.params.id;
     const { openMode } = req.body;
 
     if (!req.user.isAdmin) {
@@ -179,10 +193,8 @@ module.exports.updateOpenStatus = async (req, res, next) => {
 
 module.exports.makeUserAdmin = async (req, res, next) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.params.id;
     const user = await User.findById(userId);
-
-    console.log(req.user);
 
     if (!req.user.isAdmin) {
       return res.status(403).json({ message: 'Forbidden' });

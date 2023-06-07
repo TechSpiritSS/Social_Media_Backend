@@ -15,7 +15,7 @@ router.put('/update/:id', cookieJwtAuth, updateProfile);
 router.post('/register', register);
 router.post('/login', login);
 router.get('/allUsers/:id', cookieJwtAuth, getAllUsers);
-router.put('/updateOpenStatus/:userId', cookieJwtAuth, updateOpenStatus);
-router.put('/makeUserAdmin/:userId', cookieJwtAuth, makeUserAdmin);
+router.put('/updateOpenStatus/:id', cookieJwtAuth, updateOpenStatus);
+router.put('/makeUserAdmin/:id', cookieJwtAuth, makeUserAdmin);
 
 module.exports = router;
