@@ -6,11 +6,11 @@ This repository contains the backend code for a social media application. It pro
 
 The implemented features of the app include:
 
-- User registration and login
-- User profile management
-- Messaging between users
-- Reveal and Open modes for profile visibility
-- Admin privileges for accessing all user profiles
+- User registration: Allows users to create an account with a unique username and email.
+- User login: Authenticates users with their username and password.
+- Profile updates: Allows users to update their username, email, and password.
+- Messaging: Enables users to send and receive messages to/from other users.
+- Reveal and Open Modes: Implements a reveal mode where users can choose to reveal their profile information, and an open mode where users can view the profiles of other users who have enabled reveal mode.
 
 ## Setup and Usage
 
@@ -181,7 +181,7 @@ Response:
 }
 ```
 
-## Update Open Status:
+### Update Open Status:
 ``` vbnet
 Endpoint: PUT /api/auth/updateOpenStatus/:userId
 Description: Update open status for a user (Admin Only API)
@@ -196,7 +196,7 @@ Response:
   "message": "Open status updated successfully"
 }
 ```
-## Make User Admin
+### Make User Admin
 ``` vbnet
 Endpoint: PUT /api/auth/makeUserAdmin/:id
 Description: Make a user an admin
@@ -234,7 +234,7 @@ Response:
 ]
 ```
 
-## Send Message
+### Send Message
 ```vbnet
 Endpoint: POST /api/messages/getmsg
 Description: Add message to current chat
