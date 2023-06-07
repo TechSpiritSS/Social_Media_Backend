@@ -11,6 +11,7 @@ The implemented features of the app include:
 - Profile updates: Allows users to update their username, email, and password.
 - Messaging: Enables users to send and receive messages to/from other users.
 - Reveal and Open Modes: Implements a reveal mode where users can choose to reveal their profile information, and an open mode where users can view the profiles of other users who have enabled reveal mode.
+- Input Validation: Use of JOI to validate inputs at server and after that input validation in MongoDB Schema 
 
 ## Setup and Usage
 
@@ -249,4 +250,23 @@ Response:
   "msg": " Message added successfully"
 }
 
+```
+
+## Input Validation
+Example
+```vbnet
+Endpoint: POST /api/auth/register
+Description: Register a new user
+Payload:
+{
+  "username": "john_doe_doe",
+  "email": "john@example.com",
+  "password": "password123",
+  "token" : "648063db04e93edfa7c39dbf"
+}
+Response:
+{
+  "msg": "\"token\" is not allowed",
+  "status": false
+}
 ```
